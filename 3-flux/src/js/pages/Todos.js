@@ -1,7 +1,16 @@
 import React from "react";
-
+import AddNewUser from '../components/AddNewUser';
+import EditUser from '../components/EditUser';
+import TextFieldGroup from '../common/TextFieldGroup';
+import TrashUserRecord from '../buttons/deleteBtn.js';
 import Todo from "../components/Todo";
 import * as TodoActions from "../actions/TodoActions";
+// 'import * as' is a clean way to import and define all of your functions. It will show up here in an object literal.
+// ex)
+// {
+//    createTodo: function() {}
+//    deleteTodo: function() {}
+// }
 import TodoStore from "../stores/TodoStore";
 
 
@@ -11,11 +20,16 @@ export default class Todos extends React.Component {
     this.getTodos = this.getTodos.bind(this);
     this.state = {
       todos: TodoStore.getAll(),
+      editId: 0,
     };
   }
 
   componentWillMount() {
-    TodoStore.on("change", this.getTodos);
+    TodoStore.on("change", () => {
+      this.setState({
+        todos: TodoStore.getAll(),
+      });
+    });
   }
 
   componentWillUnmount() {
@@ -32,18 +46,32 @@ export default class Todos extends React.Component {
     TodoActions.reloadTodos();
   }
 
+
+  openEditModal = editId => this.setState({ editId });
+
   render() {
     const { todos } = this.state;
 
     const TodoComponents = todos.map((todo) => {
-        return <Todo key={todo.id} {...todo}/>;
+
+        return <Todo key={todo.id} {...todo} editTodo={(id) => this.openEditModal(id)} />;
     });
 
     return (
-      <div>
-        <button onClick={this.reloadTodos.bind(this)}>Reload!</button>
-        <h1>Todos</h1>
+
+
+      <div className="container">
+
+        <h1>User List</h1>
         <ul>{TodoComponents}</ul>
+
+        <button type="button" className="button-logo-2" data-toggle="modal" data-target="#AddModal">
+        Add User
+        </button>
+
+
+
+
       </div>
     );
   }

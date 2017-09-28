@@ -1,6 +1,7 @@
 import dispatcher from "../dispatcher";
 
 export function createTodo(text) {
+  console.log("In the actions file");
   dispatcher.dispatch({
     type: "CREATE_TODO",
     text,
