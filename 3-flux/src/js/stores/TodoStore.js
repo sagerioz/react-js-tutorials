@@ -11,7 +11,7 @@ class TodoStore extends EventEmitter {
         {
           id: 113464613,
           img_url: "https://s14-eu5.ixquick.com/cgi-bin/serveimage?url=http%3A%2F%2Ft0.gstatic.com%2Fimages%3Fq%3Dtbn%3AANd9GcStIE0EunpfyUg4xAyyTwYH2mfq-5N3ss2XyI_evjtPXIXa1iJkMw&sp=3fe9a91189cf5fea8e3df878c3f6f9bc&anticache=413846",
-          first_name: "Jane",
+          first_name: "Jabnne",
           last_name: "Doe",
           address: "101 Bayside Ave",
           city: "Bellingham",
@@ -54,10 +54,37 @@ class TodoStore extends EventEmitter {
     this.emit("change");
   }
 
+  editTodo(text){
+    console.log("You're in the store, trying to edit a todo");
+    const { id, img_url,first_name, last_name, address, city, state, zip } = text;
+    for (var i = 0; i < this.todos.length; i++) {
+      if(this.todos[i].id === id){
+        todos.splice(this.todos[i], 1)
+      }
+      this.todos.push({
+        id,
+        img_url,
+        first_name,
+        last_name,
+        address,
+        city,
+        state,
+        zip
+      });
+
+      this.emit("change");
+    }
+  }
   getAll() {
     return this.todos;
   }
-
+  findUserRecord(id){
+    const userRecord = this.todos.filter((todo) => {
+      console.log("FILTER", todo.id, " = ", this.props.id);
+        return todo.id == id
+    });
+    console.log("you got a winner", userRecord[0]);
+  }
   handleActions(action) {
     // this is where you filter out only the action this store should listen to:
     // (use uppercase as this is a constant)
@@ -67,6 +94,11 @@ class TodoStore extends EventEmitter {
         break;
       }
       case "RECEIVE_TODOS": {
+        this.todos = action.todos;
+        this.emit("change");
+        break;
+      }
+      case "EDIT_TODO": {
         this.todos = action.todos;
         this.emit("change");
         break;

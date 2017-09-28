@@ -46,15 +46,12 @@ export default class Todos extends React.Component {
     TodoActions.reloadTodos();
   }
 
-
-  openEditModal = editId => this.setState({ editId });
-
   render() {
     const { todos } = this.state;
 
     const TodoComponents = todos.map((todo) => {
 
-        return <Todo key={todo.id} {...todo} editTodo={(id) => this.openEditModal(id)} />;
+        return <Todo key={todo.id} {...todo} />;
     });
 
     return (

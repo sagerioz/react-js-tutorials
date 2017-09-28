@@ -23,35 +23,26 @@ export default class Todo extends React.Component {
 
   onChange(e) {
     this.setState({ [e.target.name]: e.target.value });
-    console.log("STATE", this.state);
-    console.log(this.props);
-
   }
   onSubmit(e) {
     e.preventDefault();
-    console.log("YOU MADE IT TO ONSUBMIT");
     let userData = this.state
     TodoActions.createTodo(userData);
-    console.log(":", userData);
+    console.log("UserData in onsubmit in addnewuser:", userData);
     let form = document.getElementById('AddUserForm');
     form.reset();
+    $('#AddUserForm').click(function() {
+    $('#modalwindow').modal('hide');
+});
     return false;
   }
-
+  resetForm(e){
+    let form = document.getElementById('AddUserForm');
+    form.reset();
+  }
   render() {
     console.log(this.props);
     const { img_url, first_name, last_name, address, city, state, zip } = this.props;
-
-    // const icon = complete ? "\u2714" : "\u2716"
-    // const space = ' ';
-
-    // if (edit) {
-    //   return (
-    //     <li>
-    //       <input value={text} focus="focused"/>
-    //     </li>
-    //   );
-    // }
 
     return (
       <div>
@@ -64,16 +55,14 @@ export default class Todo extends React.Component {
           name="first_name"
           value={first_name}
           onChange={this.onChange}
-         // error={errors.first}
         />
 
         <TextFieldGroup
           field="img_url"
-          label="Profile photo"
+          label="Profile photo url"
           name="img_url"
           value={img_url}
           onChange={this.onChange}
-         // error={errors.first}
         />
 
         <TextFieldGroup
@@ -82,7 +71,6 @@ export default class Todo extends React.Component {
           name="last_name"
           value={last_name}
           onChange={this.onChange}
-         // error={errors.last}
         />
 
         <TextFieldGroup
@@ -91,7 +79,6 @@ export default class Todo extends React.Component {
           name="address"
           value={address}
           onChange={this.onChange}
-         // error={errors.img_url}
         />
 
         <TextFieldGroup
@@ -100,7 +87,6 @@ export default class Todo extends React.Component {
           name="city"
           value={city}
           onChange={this.onChange}
-         // error={errors.img_url}
         />
         <TextFieldGroup
           field="state"
@@ -108,7 +94,6 @@ export default class Todo extends React.Component {
           name="state"
           value={state}
           onChange={this.onChange}
-         // error={errors.img_url}
         />
 
         <TextFieldGroup
@@ -117,7 +102,6 @@ export default class Todo extends React.Component {
           name="zip"
           value={zip}
           onChange={this.onChange}
-         // error={errors.img_url}
         />
         <div>
         <button type="submit" className="button-logo-2">Enter User</button>
@@ -126,9 +110,8 @@ export default class Todo extends React.Component {
 
         </div>
         <Nav>
-          <NavItem onClick={()=>{
-            this.form.reset();
-          }} className="sideFont"><span className="glyphicon glyphicon-trash" aria-hidden="false"></span></NavItem>
+          <NavItem onClick={this.resetForm.bind(this)}
+           className="sideFont"><span className="glyphicon glyphicon-trash" aria-hidden="false"></span></NavItem>
         </Nav>
       </form>
 

@@ -15,6 +15,13 @@ export function deleteTodo(id) {
   });
 }
 
+export function editTodo(text) {
+  dispatcher.dispatch({
+    type: "EDIT_TODO",
+    text,
+  });
+}
+
 export function reloadTodos() {
   // axios("http://someurl.com/somedataendpoint").then((data) => {
   //   console.log("got the data!", data);

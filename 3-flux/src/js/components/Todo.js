@@ -5,19 +5,16 @@ import TrashUserRecord from '../buttons/deleteBtn.js';
 import AddNewUser from './AddNewUser';
 import EditUser from './EditUser';
 
+
 export default class Todo extends React.Component {
   constructor(props) {
     super();
   }
 
-
-  // <Link to="/edit_user" class="btn btn-danger" params={{ id }}>Edit</Link>
-
   render() {
     const { id, img_url, complete, edit, first_name, last_name, address, city, state, zip } = this.props;
 
     const icon = complete ? "\u2714" : "\u2716"
-    const space = ' ';
 
 
   console.log("ON TODO component this.props.id", id);
@@ -34,10 +31,10 @@ export default class Todo extends React.Component {
       <div class="card">
         <img class="card-img-top" src={img_url} alt="Card image cap"/>
         <div class="card-block">
-          <h4 class="card-title">{last_name}, {first_name}</h4>
+          <h4 class="card-title">{first_name} {last_name}</h4>
           <p class="card-text">
           {address}<br/>
-          {city}, {state}, {zip}
+          {city} {state} {zip}
           </p>
           <button type="button" className="button-logo-2" data-toggle="modal" data-target="#EditModal">
           Edit User { id }
@@ -46,7 +43,7 @@ export default class Todo extends React.Component {
 
       </div>
 
-      
+
 
 
       <div className="modal fade" id="AddModal" tabIndex="-1" role="dialog" aria-labelledby="myModalLabel">
